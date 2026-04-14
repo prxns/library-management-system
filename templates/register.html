@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-7 col-xl-6">
+    <div class="card card-dark rounded-4 p-4 p-md-5 shadow-sm">
+      <h1 class="h3 mb-2">Create Account</h1>
+      <p class="text-muted-2 mb-4">Register to borrow and track your books.</p>
+
+      <form method="post" novalidate>
+        {% csrf_token %}
+
+        {% if form.errors %}
+          <div class="alert alert-danger">
+            Please correct the highlighted errors and try again.
+          </div>
+        {% endif %}
+
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">First name</label>
+            {{ form.first_name }}
+            {{ form.first_name.errors }}
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Last name</label>
+            {{ form.last_name }}
+            {{ form.last_name.errors }}
+          </div>
+          <div class="col-12">
+            <label class="form-label">Username</label>
+            {{ form.username }}
+            {{ form.username.errors }}
+          </div>
+          <div class="col-12">
+            <label class="form-label">Email</label>
+            {{ form.email }}
+            {{ form.email.errors }}
+          </div>
+          <div class="col-12">
+            <label class="form-label">Password</label>
+            {{ form.password1 }}
+            {{ form.password1.errors }}
+          </div>
+          <div class="col-12">
+            <label class="form-label">Confirm password</label>
+            {{ form.password2 }}
+            {{ form.password2.errors }}
+          </div>
+        </div>
+
+        <div class="d-grid mt-4">
+          <button type="submit" class="btn btn-accent btn-lg">Register</button>
+        </div>
+      </form>
+
+      <p class="mt-4 mb-0 text-center text-muted-2">
+        Already have an account? <a href="{% url 'login' %}">Login</a>
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}

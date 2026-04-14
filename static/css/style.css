@@ -1,0 +1,111 @@
+:root {
+  --bg-start: #050816;
+  --bg-end: #0b1220;
+  --card-bg: rgba(15, 23, 42, 0.82);
+  --border: rgba(255, 255, 255, 0.09);
+  --text-soft: #94a3b8;
+  --accent-1: #7c3aed;
+  --accent-2: #06b6d4;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  min-height: 100%;
+}
+
+body {
+  background:
+    radial-gradient(circle at top, rgba(124, 58, 237, 0.18), transparent 35%),
+    radial-gradient(circle at right, rgba(6, 182, 212, 0.13), transparent 30%),
+    linear-gradient(180deg, var(--bg-end), var(--bg-start));
+  color: #e5e7eb;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+.text-muted-2 {
+  color: var(--text-soft) !important;
+}
+
+.glass-nav,
+.glass-card,
+.card-dark {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(16px);
+}
+
+.glass-nav {
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+}
+
+.hero {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.16), rgba(6, 182, 212, 0.10));
+  border: 1px solid var(--border);
+  border-radius: 28px;
+}
+
+.badge-soft {
+  background: rgba(124, 58, 237, 0.18);
+  border: 1px solid rgba(124, 58, 237, 0.28);
+  color: #ddd6fe;
+  padding: 0.55rem 0.8rem;
+}
+
+.btn-accent {
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+  color: #fff;
+  border: none;
+  box-shadow: 0 10px 30px rgba(124, 58, 237, 0.25);
+}
+
+.btn-accent:hover {
+  color: #fff;
+  opacity: 0.96;
+}
+
+.card-dark {
+  color: #e5e7eb;
+}
+
+.form-control,
+.form-control:focus {
+  background-color: rgba(2, 6, 23, 0.78);
+  color: #e5e7eb;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: none;
+}
+
+.form-control::placeholder {
+  color: #64748b;
+}
+
+.form-label {
+  color: #cbd5e1;
+}
+
+.book-cover {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.18), rgba(6, 182, 212, 0.12));
+}
+
+.table-dark {
+  --bs-table-bg: transparent;
+  --bs-table-color: #e5e7eb;
+  --bs-table-border-color: rgba(255, 255, 255, 0.08);
+}
+
+.table td,
+.table th {
+  vertical-align: middle;
+}

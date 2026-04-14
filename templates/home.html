@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="hero p-4 p-md-5 mb-4 mb-lg-5">
+  <div class="row align-items-center g-4">
+    <div class="col-lg-8">
+      <span class="badge badge-soft mb-3">Digital Library Platform</span>
+      <h1 class="display-5 fw-bold mb-3">Search, Borrow, and Return Books Seamlessly</h1>
+      <p class="lead text-muted-2 mb-4">
+        A responsive web-based library management system built with Django, Bootstrap, and MySQL.
+      </p>
+
+      <form method="get" class="row g-2">
+        <div class="col-md-9">
+          <input
+            type="text"
+            name="q"
+            value="{{ query }}"
+            class="form-control form-control-lg bg-dark text-light border-0"
+            placeholder="Search by title, author, category, or ISBN"
+          >
+        </div>
+        <div class="col-md-3 d-grid">
+          <button type="submit" class="btn btn-accent btn-lg">Search</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="glass-card p-4 rounded-4 text-center h-100">
+        <i class="bi bi-book-half display-1"></i>
+        <h2 class="h4 mt-3 mb-2">Smart Library Access</h2>
+        <p class="text-muted-2 mb-0">
+          Manage records efficiently and keep track of every borrow and return.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h2 class="h4 mb-0">Books</h2>
+  <span class="text-muted-2">{{ books|length }} result{{ books|length|pluralize }}</span>
+</div>
+
+<div class="row g-4">
+  {% for book in books %}
+    <div class="col-md-6 col-lg-4">
+      <div class="card card-dark h-100 rounded-4 overflow-hidden shadow-sm">
+        {% if book.cover_url %}
+          <img src="{{ book.cover_url }}" alt="{{ book.title }}" class="book-cover">
+        {% else %}
+          <div class="book-cover d-flex align-items-center justify-content-center">
+            <i class="bi bi-book display-4"></i>
+          </div>
+        {% endif %}
+
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-start gap-2">
+            <div>
+              <h3 class="h5 mb-1">{{ book.title }}</h3>
+              <p class="mb-1 text-muted-2">{{ book.author }}</p>
+            </div>
+            <span class="badge badge-soft">{{ book.category }}</span>
+          </div>
+
+          <p class="small text-muted-2 mt-3 mb-2">
+            ISBN: {{ book.isbn|default:"N/A" }}
+          </p>
+
+          <p class="small text-muted-2">
+            {{ book.description|default:"No description available." }}
+          </p>
+
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <span class="small">Copies available</span>
+            <span class="fw-semibold">{{ book.available_copies }}/{{ book.total_copies }}</span>
+          </div>
+
+          {% if user.is_authenticated %}
+            {% if book.available_copies > 0 %}
+              <form method="post" action="{% url 'borrow_book' book.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-accent w-100">Borrow Book</button>
+              </form>
+            {% else %}
+              <button class="btn btn-outline-secondary w-100" disabled>Unavailable</button>
+            {% endif %}
+          {% else %}
+            <a href="{% url 'login' %}" class="btn btn-outline-info w-100">Login to Borrow</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <div class="col-12">
+      <div class="card card-dark rounded-4 p-5 text-center">
+        <h3 class="h5 mb-2">No books found</h3>
+        <p class="text-muted-2 mb-0">Try another search term.</p>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}
